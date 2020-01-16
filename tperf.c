@@ -34,7 +34,7 @@
 #define NSEC_PER_SEC		1000000000ULL
 #define MIN_PERIOD		100000
 #define MIN_DELAY		100000
-#define DEFAULT_PRIORITY	90
+#define DEFAULT_PRIORITY	0
 #define DEFAULT_CPU		0
 #define DEFAULT_TTR		10
 #define MAX_FRAME_SIZE		1500
@@ -636,6 +636,7 @@ static int set_realtime(pthread_t thread, int priority, int cpu)
 		return ret;
 	}
 
+	printf("Default prio %d, setting to %d\n", sp.sched_priority, priority);
 	sp.sched_priority = priority;
 
 	ret = pthread_setschedparam(thread, SCHED_FIFO, &sp);
