@@ -507,7 +507,7 @@ static int client_loop(void)
 	struct ifreq req;
 	uint8_t *payload;
 
-	sk_fd = socket(AF_PACKET, SOCK_DGRAM | SOCK_NONBLOCK, htons(ETH_P_TSN));
+	sk_fd = socket(AF_PACKET, SOCK_DGRAM, htons(ETH_P_TSN));
 	if (sk_fd < 0) {
 		perror("Failed to open socket");
 		return -1;
@@ -565,7 +565,7 @@ static int client_loop(void)
 		clock_gettime(CLOCK_TAI, &ts_rt1);
 		rt1 = ts_rt1.tv_sec * NSEC_PER_SEC + ts_rt1.tv_nsec;
 
-		ret = poll(fds, 1, 1);
+		ret = poll(fds, 1, -1);
 		if (ret == 0) {
 			goto tx_time;
 		} else if (ret < 0) {
